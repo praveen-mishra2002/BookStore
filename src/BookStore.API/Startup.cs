@@ -11,6 +11,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BookStore.Infrastructure.Context;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookStore.API
 {
@@ -27,6 +29,10 @@ namespace BookStore.API
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<BookStoreDbContext>(options =>
+            {
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
+            });
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -55,5 +61,7 @@ namespace BookStore.API
                 endpoints.MapControllers();
             });
         }
+        
+        
     }
 }
